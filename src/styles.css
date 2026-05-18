@@ -1,0 +1,171 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-canvas-base: #F7F4F3;
+  --color-charcoal-earth: #564D4A;
+  --color-deep-wine: #5B2333;
+  --color-vibrant-vermillion: #F24333;
+  --color-crimson-red: #BA1B1D;
+  --color-warm-honey: #E5A93C;
+}
+
+:root {
+  --canvas-base: #F7F4F3;
+  --charcoal-earth: #564D4A;
+  --deep-wine: #5B2333;
+  --vibrant-vermillion: #F24333;
+  --crimson-red: #BA1B1D;
+  --warm-honey: #E5A93C;
+  color: var(--charcoal-earth);
+  background: var(--canvas-base);
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  overflow-x: hidden;
+  background-color: var(--canvas-base);
+}
+
+body::before {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  content: '';
+  opacity: 0.45;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='table' tableValues='0 0.08'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23noise)' opacity='0.65'/%3E%3C/svg%3E");
+}
+
+#root {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.neo-brutal {
+  border: 2px solid var(--charcoal-earth);
+  box-shadow: 4px 4px 0 0 var(--charcoal-earth);
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    background-color 180ms ease,
+    color 180ms ease;
+}
+
+.neo-brutal-active,
+.neo-brutal:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 0 var(--charcoal-earth);
+}
+
+.filter-sticker {
+  border: 2px solid var(--charcoal-earth);
+  box-shadow: 4px 4px 0 0 var(--charcoal-earth);
+  transform-origin: center;
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    background-color 180ms ease;
+}
+
+.filter-sticker:hover {
+  animation: sticker-wiggle 420ms ease-in-out;
+}
+
+@keyframes sticker-wiggle {
+  0%,
+  100% {
+    transform: rotate(0deg) translateY(0);
+  }
+
+  25% {
+    transform: rotate(-1.5deg) translateY(-1px);
+  }
+
+  50% {
+    transform: rotate(1.5deg) translateY(1px);
+  }
+
+  75% {
+    transform: rotate(-0.8deg) translateY(-1px);
+  }
+}
+
+.ticket-edge {
+  position: relative;
+}
+
+.ticket-edge::after {
+  position: absolute;
+  right: -10px;
+  top: 0;
+  z-index: 2;
+  width: 20px;
+  height: 100%;
+  content: '';
+  background:
+    radial-gradient(circle at 10px 10px, transparent 8px, var(--canvas-base) 8.5px) 0 0 / 20px
+      20px repeat-y;
+  filter: drop-shadow(2px 0 0 var(--charcoal-earth));
+}
+
+.ticket-card {
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.ticket-card-content {
+  transform: translateZ(24px);
+}
+
+.sync-ribbon {
+  transform: translateY(-120%);
+  opacity: 0;
+  transition:
+    transform 240ms ease,
+    opacity 240ms ease;
+}
+
+.sync-ribbon.visible {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+@media (max-width: 767px) {
+  .ticket-edge::after {
+    right: 0;
+    top: auto;
+    bottom: -10px;
+    width: 100%;
+    height: 20px;
+    background:
+      radial-gradient(circle at 10px 10px, transparent 8px, var(--canvas-base) 8.5px) 0 0 /
+        20px 20px repeat-x;
+    filter: drop-shadow(0 2px 0 var(--charcoal-earth));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
