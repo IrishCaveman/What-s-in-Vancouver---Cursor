@@ -1,0 +1,50 @@
+{
+  "name": "whats-in-vancouver",
+  "version": "1.0.0",
+  "description": "Vancouver event aggregator with tactile maximalist UI and ingestion guardrails.",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "ingest": "tsx scripts/scrape-and-extract.ts",
+    "ingest:check": "tsx scripts/scrape-and-extract.ts --validate-config",
+    "ingest:dry-run": "tsx scripts/scrape-and-extract.ts --dry-run --limit=1",
+    "preview": "vite preview",
+    "test": "vitest run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IrishCaveman/What-s-in-Vancouver---Cursor.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/IrishCaveman/What-s-in-Vancouver---Cursor/issues"
+  },
+  "homepage": "https://github.com/IrishCaveman/What-s-in-Vancouver---Cursor#readme",
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "@supabase/supabase-js": "^2.106.0",
+    "dotenv": "^17.4.2",
+    "lucide-react": "^1.16.0",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.0",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@types/node": "^25.9.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.2",
+    "jsdom": "^29.1.1",
+    "tailwindcss": "^4.3.0",
+    "tsx": "^4.22.2",
+    "typescript": "^6.0.3",
+    "vite": "^8.0.13",
+    "vitest": "^4.1.6"
+  }
+}
