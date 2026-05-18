@@ -25,6 +25,9 @@ export interface EventRecord {
   imageUrl: string;
   tags: EventTag[];
   source: EventSource;
+  price?: string;
+  ticketUrl?: string;
+  moreInfoUrl?: string;
   url?: string;
 }
 

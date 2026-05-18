@@ -13,6 +13,9 @@ export const sampleEvents: EventRecord[] = [
       'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=1400&auto=format&fit=crop',
     tags: ['EDM', 'Nighttime Events', 'New Skytrain'],
     source: 'ticketmaster',
+    price: 'From $68',
+    ticketUrl: 'https://www.ticketmaster.ca/',
+    moreInfoUrl: 'https://www.rogersarena.com/',
     url: 'https://www.ticketmaster.ca/'
   },
   {
@@ -27,6 +30,8 @@ export const sampleEvents: EventRecord[] = [
       'https://images.unsplash.com/photo-1559511260-66a654ae982a?w=1400&auto=format&fit=crop',
     tags: ['Outdoor', 'Daytime Events', 'Kid Friendly'],
     source: 'manual',
+    price: 'Free',
+    moreInfoUrl: 'https://vancouver.ca/parks-recreation-culture/stanley-park.aspx',
     url: 'https://vancouver.ca/parks-recreation-culture/stanley-park.aspx'
   },
   {
@@ -40,6 +45,9 @@ export const sampleEvents: EventRecord[] = [
     imageUrl: 'https://images.unsplash.com/photo-1545231027-634d0f62f294?w=1200',
     tags: ['Outdoor', 'Daytime Events', 'Nighttime Events', 'Kid Friendly', 'New Skytrain'],
     source: 'christmas-market',
+    price: 'Ticketed entry',
+    ticketUrl: 'https://www.vancouverchristmasmarket.com/',
+    moreInfoUrl: 'https://www.vancouverchristmasmarket.com/',
     url: 'https://www.vancouverchristmasmarket.com/'
   }
 ];
