@@ -123,7 +123,7 @@ export function selectTicketmasterHeroImage(images: TicketmasterImage[] = []) {
     .filter((image) => image.ratio === '16_9' && (image.width ?? 0) > 1000 && image.url)
     .sort((left, right) => (right.width ?? 0) - (left.width ?? 0))[0];
 
-  return sixteenNineLarge?.url ?? images.find((image) => image.url)?.url ?? '';
+  return sixteenNineLarge?.url ?? '';
 }
 
 function buildTicketmasterDate(event: TicketmasterEvent) {

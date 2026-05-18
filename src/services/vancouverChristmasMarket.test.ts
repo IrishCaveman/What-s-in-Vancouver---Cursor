@@ -2,7 +2,8 @@ import { describe, expect, it, vi } from 'vitest';
 import {
   christmasMarketFallback,
   isWithinChristmasMarketSeason,
-  normalizeChristmasMarketRows
+  normalizeChristmasMarketRows,
+  toSupabaseEventRow
 } from './vancouverChristmasMarket';
 
 describe('Vancouver Christmas Market guardrail', () => {
@@ -23,6 +24,6 @@ describe('Vancouver Christmas Market guardrail', () => {
     const events = await normalizeChristmasMarketRows([], supabase);
 
     expect(events).toEqual([christmasMarketFallback]);
-    expect(upsert).toHaveBeenCalledWith(christmasMarketFallback, { onConflict: 'id' });
+    expect(upsert).toHaveBeenCalledWith(toSupabaseEventRow(christmasMarketFallback), { onConflict: 'id' });
   });
 });

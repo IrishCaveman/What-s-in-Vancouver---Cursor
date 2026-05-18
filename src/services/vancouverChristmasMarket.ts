@@ -98,7 +98,22 @@ async function commitChristmasMarketFallback(supabase?: SupabaseLikeClient) {
     return;
   }
 
-  await supabase.from('events').upsert?.(christmasMarketFallback, { onConflict: 'id' });
+  await supabase.from('events').upsert?.(toSupabaseEventRow(christmasMarketFallback), { onConflict: 'id' });
+}
+
+export function toSupabaseEventRow(event: EventRecord) {
+  return {
+    id: event.id,
+    title: event.title,
+    description: event.description,
+    date: event.date,
+    address: event.address,
+    city: event.city,
+    image_url: event.imageUrl,
+    tags: event.tags,
+    source: event.source,
+    url: event.url
+  };
 }
 
 function slugify(value: string) {

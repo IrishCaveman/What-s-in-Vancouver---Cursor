@@ -29,6 +29,15 @@ describe('Ticketmaster Rogers Arena guardrails', () => {
     expect(selected).toBe('large.jpg');
   });
 
+  it('rejects image fallbacks that are not large 16:9 assets', () => {
+    const selected = selectTicketmasterHeroImage([
+      { url: 'small.jpg', ratio: '16_9', width: 800 },
+      { url: 'portrait.jpg', ratio: '3_2', width: 1800 }
+    ]);
+
+    expect(selected).toBe('');
+  });
+
   it('falls through info, pleaseNote, and attraction bio descriptions', () => {
     const mapped = mapTicketmasterEvents({
       _embedded: {
