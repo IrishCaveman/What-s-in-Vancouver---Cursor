@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { EventDetailModal } from './components/EventDetailModal';
 import { EventTicketCard } from './components/EventTicketCard';
 import { FilterMatrix } from './components/FilterMatrix';
 import { Hero } from './components/Hero';
@@ -12,6 +13,7 @@ export default function App() {
   const [logs, setLogs] = useState<FailedIngestionLog[]>([]);
   const [activeTier, setActiveTier] = useState<TierOneFilter>('all');
   const [activeTags, setActiveTags] = useState<EventTag[]>([]);
+  const [selectedEvent, setSelectedEvent] = useState<EventRecord | null>(null);
 
   useEffect(() => {
     void fetchCuratedEvents().then((records) => {
@@ -79,12 +81,13 @@ export default function App() {
 
         <div className="grid gap-8">
           {filteredEvents.map((event) => (
-            <EventTicketCard key={event.id} event={event} />
+            <EventTicketCard key={event.id} event={event} onSelect={setSelectedEvent} />
           ))}
         </div>
       </section>
 
       <IngestionErrorQueue logs={logs} />
+      {selectedEvent ? <EventDetailModal event={selectedEvent} onClose={() => setSelectedEvent(null)} /> : null}
     </main>
   );
 }

@@ -3,9 +3,10 @@ import type { EventRecord } from '../types/events';
 
 interface EventTicketCardProps {
   event: EventRecord;
+  onSelect: (event: EventRecord) => void;
 }
 
-export function EventTicketCard({ event }: EventTicketCardProps) {
+export function EventTicketCard({ event, onSelect }: EventTicketCardProps) {
   function handleMouseMove(mouseEvent: MouseEvent<HTMLElement>) {
     const card = mouseEvent.currentTarget;
     const rect = card.getBoundingClientRect();
@@ -22,12 +23,27 @@ export function EventTicketCard({ event }: EventTicketCardProps) {
 
   return (
     <article
-      className="ticket-card neo-brutal flex flex-col overflow-hidden rounded-[1.8rem] bg-white md:flex-row"
+      className="ticket-card neo-brutal glass-card group flex cursor-pointer flex-col overflow-hidden rounded-[1.8rem] md:flex-row"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
+      onClick={() => onSelect(event)}
+      onKeyDown={(keyboardEvent) => {
+        if (keyboardEvent.key === 'Enter' || keyboardEvent.key === ' ') {
+          keyboardEvent.preventDefault();
+          onSelect(event);
+        }
+      }}
+      role="button"
+      tabIndex={0}
+      aria-label={`Open details for ${event.title}`}
     >
       <div className="ticket-edge relative aspect-[16/9] w-full shrink-0 overflow-hidden bg-deep-wine md:w-2/5">
-        <img src={event.imageUrl} alt="" className="h-full w-full object-cover" loading="lazy" />
+        <img
+          src={event.imageUrl}
+          alt=""
+          className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]"
+          loading="lazy"
+        />
         <div className="absolute left-4 top-4 rounded-full border-2 border-charcoal-earth bg-warm-honey px-3 py-1 text-xs font-black uppercase tracking-[0.14em] text-charcoal-earth shadow-[3px_3px_0px_0px_#564D4A]">
           {event.source}
         </div>
@@ -64,16 +80,22 @@ export function EventTicketCard({ event }: EventTicketCardProps) {
           <p className="text-sm font-bold text-charcoal-earth">
             {event.address}, {event.city}
           </p>
-          {event.url ? (
-            <a
-              className="neo-brutal inline-flex items-center justify-center rounded-full bg-vibrant-vermillion px-4 py-2 text-sm font-black text-white"
-              href={event.url}
-              target="_blank"
-              rel="noreferrer"
-            >
-              View source
-            </a>
-          ) : null}
+          <div className="flex flex-wrap gap-2">
+            <span className="rounded-full border-2 border-charcoal-earth bg-white/70 px-3 py-2 text-sm font-black text-deep-wine shadow-[2px_2px_0px_0px_#564D4A] backdrop-blur">
+              {event.price ?? 'Price varies'}
+            </span>
+            {event.url ? (
+              <a
+                className="micro-button neo-brutal inline-flex items-center justify-center rounded-full bg-vibrant-vermillion px-4 py-2 text-sm font-black text-white"
+                href={event.url}
+                target="_blank"
+                rel="noreferrer"
+                onClick={(clickEvent) => clickEvent.stopPropagation()}
+              >
+                View source
+              </a>
+            ) : null}
+          </div>
         </div>
       </div>
     </article>
