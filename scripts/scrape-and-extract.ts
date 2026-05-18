@@ -3,6 +3,7 @@ import { createClient } from '@supabase/supabase-js';
 import { config as loadEnv } from 'dotenv';
 import { createHash } from 'node:crypto';
 import { extname } from 'node:path';
+import { chromium } from 'playwright';
 import { eventSourceTargets, type EventSourceTarget } from '../src/config/eventSources';
 
 loadEnv({ path: '.env.local', quiet: true });
@@ -48,7 +49,9 @@ const SUPABASE_SERVICE_ROLE_KEY = requiredEnv('SUPABASE_SERVICE_ROLE_KEY');
 const GEMINI_API_KEY = requiredEnv('GEMINI_API_KEY');
 const GEMINI_MODEL = process.env.GEMINI_MODEL || 'gemini-flash-latest';
 const STORAGE_BUCKET = process.env.SUPABASE_EVENT_IMAGE_BUCKET || 'event-images';
-const MAX_PAGE_CHARS = Number(process.env.SCRAPER_MAX_PAGE_CHARS || 180_000);
+const SCRAPER_USER_AGENT =
+  process.env.SCRAPER_USER_AGENT ||
+  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36';
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
   auth: {
@@ -88,13 +91,12 @@ async function ingestTarget(target: EventSourceTarget, options: { dryRun: boolea
 
   try {
     const html = await fetchSourceHtml(target.url);
-    const text = htmlToText(html).slice(0, MAX_PAGE_CHARS);
-    const extractedEvents = await extractEventsWithGemini(target, text);
+    const extractedEvents = await extractEventsWithGemini(target, html);
 
     if (extractedEvents.length === 0) {
       await logFailedIngestion(target, ['no_events_extracted'], {
         source_url: target.url,
-        raw_length: text.length
+        raw_length: html.length
       }, options.dryRun);
       return;
     }
@@ -134,20 +136,25 @@ async function ingestTarget(target: EventSourceTarget, options: { dryRun: boolea
 }
 
 async function fetchSourceHtml(url: string) {
-  const response = await fetch(url, {
-    headers: {
-      accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-      'accept-language': 'en-CA,en;q=0.9',
-      'user-agent':
-        'Mozilla/5.0 (compatible; WhatsInVancouverBot/1.0; +https://github.com/IrishCaveman/What-s-in-Vancouver---Cursor)'
+  const browser = await chromium.launch({ headless: true });
+  const context = await browser.newContext({
+    userAgent: SCRAPER_USER_AGENT,
+    locale: 'en-CA',
+    timezoneId: 'America/Vancouver',
+    extraHTTPHeaders: {
+      'accept-language': 'en-CA,en;q=0.9'
     }
   });
 
-  if (!response.ok) {
-    throw new Error(`Fetch failed for ${url}: ${response.status} ${response.statusText}`);
+  try {
+    const page = await context.newPage();
+    await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60_000 });
+    await page.waitForLoadState('networkidle');
+    return await page.content();
+  } finally {
+    await context.close();
+    await browser.close();
   }
-
-  return response.text();
 }
 
 async function extractEventsWithGemini(target: EventSourceTarget, pageText: string): Promise<ExtractedEvent[]> {
@@ -384,19 +391,6 @@ function parseGeminiJson(text: string): ExtractedEvent[] {
   }
 
   return parsed as ExtractedEvent[];
-}
-
-function htmlToText(html: string) {
-  return html
-    .replace(/<script[\s\S]*?<\/script>/gi, ' ')
-    .replace(/<style[\s\S]*?<\/style>/gi, ' ')
-    .replace(/<[^>]+>/g, ' ')
-    .replace(/&nbsp;/g, ' ')
-    .replace(/&amp;/g, '&')
-    .replace(/&#39;/g, "'")
-    .replace(/&quot;/g, '"')
-    .replace(/\s+/g, ' ')
-    .trim();
 }
 
 function validateTargets(targets: EventSourceTarget[]) {
