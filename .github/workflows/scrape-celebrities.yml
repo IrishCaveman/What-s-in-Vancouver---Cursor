@@ -1,0 +1,29 @@
+name: Scrape Celebrities Nightclub
+
+on:
+  schedule:
+    - cron: '0 11 * * *' # 3am PST / 11am UTC daily
+  workflow_dispatch: # manual trigger
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - run: npx playwright install --with-deps chromium
+
+      - run: npm run scrape:celebrities
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: celebrities-events
+          path: data/celebrities-events.json
+          retention-days: 30

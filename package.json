@@ -10,6 +10,7 @@
     "ingest": "tsx scripts/scrape-and-extract.ts",
     "ingest:check": "tsx scripts/scrape-and-extract.ts --validate-config",
     "ingest:dry-run": "tsx scripts/scrape-and-extract.ts --dry-run --limit=1",
+    "scrape:celebrities": "tsx scripts/scrape-celebrities.ts",
     "preview": "vite preview",
     "test": "vitest run"
   },
