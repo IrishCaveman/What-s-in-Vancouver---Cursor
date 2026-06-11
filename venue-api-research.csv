@@ -1,0 +1,44 @@
+Website URL,Event Type,API Key,Status,Person Responsible,Account Required,Login Details (Email/Password),Notes
+Ticketmaster,,https://developer.ticketmaster.com/products-and-docs/apis/discovery-api/v2/,Ready to integrate,,TRUE,developer.ticketmaster.com,"Discovery API v2. Free, 5000 calls/day. Covers Rogers Arena, Commodore, Vogue, BC Place, PNE, Live Nation venues automatically."
+Eventbrite,,https://www.eventbrite.com/platform/api,Scrape only,,TRUE,,"Public search endpoint removed 2019. OAuth only queries by specific org/venue/event ID. No general discovery. Scrape instead."
+Showpass,,https://dev.showpass.com/api/01-public-api-introduction/,Ready to integrate,,TRUE,dev.showpass.com,Free public API. Good for local/indie events not on Ticketmaster.
+Meetup.com,,https://www.meetup.com/graphql/,Blocked - paid,,TRUE,,Requires Pro subscription + approval. Not free.
+Facebook Events,,https://developers.facebook.com/docs/graph-api/reference/event/,Blocked - restricted,,TRUE,,Requires app review heavily restricted. Not practical.
+Luma,,https://docs.luma.com/reference/getting-started-with-your-api,Blocked - paid,,TRUE,,Requires Luma Plus ($59-69/mo) for API access.
+Daily Hive Vancouver,,,Scrape only,,FALSE,,No API. Aggregator site likely duplicates TM/Eventbrite events.
+Vancouver is Awesome,,,Scrape only,,FALSE,,No API. Aggregator site.
+Miss604,,,Scrape only,,FALSE,,No API. Blog/aggregator.
+Vancouver Magazine,,,Scrape only,,FALSE,,No API.
+Curiocity Vancouver,,,Scrape only,,FALSE,,No API. Aggregator site.
+https://www.destinationvancouver.com/things-to-do,,,Scrape only,,FALSE,,No API. Tourism board site.
+Celebrities,,,Scrape only,,FALSE,,No API. Individual venue site.
+Red Room Vancouver,,,Scrape only,,FALSE,,No API. Individual venue site.
+Vancouver Civic Theatres,,,Scrape only,,FALSE,,No API.
+Vancouver Art Gallery,,,Scrape only,,FALSE,,No API.
+Science World,,,Scrape only,,FALSE,,No API.
+Bard on the beach,,,Scrape only,,FALSE,,No API.
+Vancouver Symphony Orchestra,,,Scrape only,,FALSE,,No API.
+Bandsintown,,https://help.artists.bandsintown.com/en/articles/9186477-api-documentation,Limited use,,TRUE,Requires written consent from Bandsintown,Free but per-artist lookup only. Not a discovery API. Useful for enriching known artists.
+Live Nation,,https://developer.ticketmaster.com/products-and-docs/apis/discovery-api/v2/,Use Ticketmaster,,FALSE,,Same parent company same Discovery API. No separate key needed.
+MRG Live,,,Scrape only,,FALSE,,No API.
+EDM Train,,https://edmtrain.com/developer-api,Do not use,,TRUE,edmtrain.com/developer-api,Free API but terms prohibit combining with other sources for event discovery.
+Rogers Arena,,,Use Ticketmaster,,FALSE,,Covered by Ticketmaster Discovery API.
+BC Place,,,Use Ticketmaster,,FALSE,,Covered by Ticketmaster Discovery API.
+PNE,,,Use Ticketmaster,,FALSE,,Covered by Ticketmaster Discovery API.
+Commodore Ballroom,,,Use Ticketmaster,,FALSE,,Covered by Ticketmaster Discovery API.
+Vogue,,,Use Ticketmaster,,FALSE,,Covered by Ticketmaster Discovery API.
+Biltmore Cabaret,,,Scrape only,,FALSE,,No API.
+The Pearl,,,Scrape only,,FALSE,,No API.
+Family Fun Vancouver,,,Scrape only,,FALSE,,No API. Blog site.
+Vancouver Public Library,,,Scrape only,,FALSE,,No API for events.
+Dine Out Vancouver,,,Scrape only,,FALSE,,No API. Seasonal event.
+Whistler Blackcomb Events,,,Scrape only,,FALSE,,No API for events.
+Tourism Richmond,,,Scrape only,,FALSE,,No API.
+Explore Burnaby,,,Scrape only,,FALSE,,No API.
+Vancouvers North Shore Tourism,,,Scrape only,,FALSE,,No API.
+Discover Surrey,,,Scrape only,,FALSE,,No API.
+Tourism New Westminster,,,Scrape only,,FALSE,,No API.
+Discover Langley,,,Scrape only,,FALSE,,No API.
+Cypress Mountain,,,Scrape only,,FALSE,,No API.
+Grouse Mountain,,,Scrape only,,FALSE,,No API.
+City of Vancouver Open Data,,https://opendata.vancouver.ca/api/explore/v2.1/console,Ready to integrate,,FALSE,"opendata.vancouver.ca (optional key for large datasets)",Free municipal events API. No key needed for small queries.
